@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>LeoGeo | FishingSpots</title>
+    <title>Ajax/REST Test</title>
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,35 +13,28 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-  <!-- Leaflet CSS and JS -->
-  <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
-  <script src="lib/leaflet/leaflet.js"></script>
-
+	
 </head>
 
 <body>
 
-  <nav>
-    <div class="nav-wrapper light-blue">
-      <a href="#!" class="brand-logo ">LeoGeo</a>
-      <ul class="right hide-on-med-and-down">
-        <!--<li><a href="sass.html">About</a></li>-->
-        <!--<li><a href="badges.html">Map</a></li>-->
-
-      </ul>
+<nav class="cyan darken-4">
+    <div id="navigation_container" class="wrapper">
+    <div id="rectangle">
+        <a href="#!" class="brand-logo center">Fishing Spots</a>
+        <!--Navigation Links-->
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a class="" href="#">About</a></li>
+            <li><a class="" href="#">Map</a></li>
+        </ul>
     </div>
-  </nav>
+</nav>
 
     <div class="fs-ribbon" style="margin-top:75px"></div>
 
     <main>
 
     <div class="container">
-      <div class="">
-
-      </div>
-        <h5>Fishing Spots</h5>
-      </div>
 
         <div class="col s12">
             <div class="row">
@@ -53,28 +46,24 @@
                     </div>
 
                     <div class="col m9" id="mapid" style="height: 400px">
-
+                        
                     </div>
 
             </div>
         </div>
-    </div>
+    </div>    
 
     </main>
 
-    <footer class="page-footer light-blue">
+    <footer class="page-footer cyan darken-4">
+        <div class="container"></div>
+                  
+        <div class="footer-copyright">
             <div class="container">
-                <div class="row ">
-
-              </div>
+                <p>CMPS 411, Fall 2016</p>
             </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            2016 &copy; LeoGeo
-            </div>
-          </div>
-        </footer>
+        </div>
+    </footer>
 
 
 </div>

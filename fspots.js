@@ -30,36 +30,48 @@ var marker = L.marker(coords).addTo(mymap);
 // }
 $(document).ready(function() {
 
-    // $.ajax({
-    //     dataType: "json",
-    //     type: 'GET',
-    //     crossDomain: false,
-    //     url: "http://localhost:8000/api/basescore/1/?format=json",
-    //     success: function(data) {
-    //         $(data).each(function(key, data){
-    //             // do stuff
-    //             var fsid = "fs" + $("#fsmenu").children("li").length;
-    //             console.log(fsid);
-    //             // alert($("#fsmenu").children("li"));
-    //             $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
-    //             console.log(data.properties.name);
-    //             console.log(data.properties.lat);
-    //             console.log(data.properties.lon);
-    //             console.log(data.properties.score);
-    //             console.log(data.geometry.coordinates);
-    //         });
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //         alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
+     $.ajax({
+         url: "http://localhost:8000/api/basescore/?format=json",
+         type: 'GET',
+         dataType: "json",
+         crossDomain: false, //true,
+         success: function(data) {
+//            L.geoJSON(data.results, {
+//                style: function (feature) {
+//                    return {color: feature.properties.color};
+//                }
+//            }).bindPopup(function (layer) {
+//                return layer.feature.properties.description;
+//            }).addTo(mymap);
+                console.log(data);
+             $(data.results.features).each(function(key, data){
+                 // do stuff
+                 console.log(data.properties.name);
 
-    //         $('#result').html('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
-    //         console.log('jqXHR:');
-    //         console.log(jqXHR);
-    //         console.log('textStatus:');
-    //         console.log(textStatus);
-    //         console.log('errorThrown:');
-    //         console.log(errorThrown);
-    //     },
-    // });
+
+                 var fsid = "fs" + $("#fsmenu").children("li").length;
+                 console.log(fsid);
+                 L.marker(data.geometry.coordinates).addTo(mymap);
+                 // alert($("#fsmenu").children("li"));
+                 $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
+//                 console.log(data.properties.name);
+//                 console.log(data.properties.lat);
+//                 console.log(data.properties.lon);
+//                 console.log(data.properties.score);
+//                 console.log(data.geometry.coordinates);
+             });
+         },
+         error: function(jqXHR, textStatus, errorThrown) {
+//             alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
+
+             $('#result').html('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
+             console.log('jqXHR:');
+             console.log(jqXHR);
+             console.log('textStatus:');
+             console.log(textStatus);
+             console.log('errorThrown:');
+             console.log(errorThrown);
+         },
+     });
 
 });

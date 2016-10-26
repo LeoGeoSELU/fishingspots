@@ -1,0 +1,34 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+#nav-mobile li {
+
+        list-style: none;
+        display: block;
+        float: left;
+        margin: 1em;
+}
+#nav-mobile li a {
+	text-shadow: 0 2px 1px rgba(0,0,0,0.5);
+        display: block;
+        text-decoration: none;
+        color: #f0f0f0;
+        font-size: 1.6em;
+        margin: 0 .5em;
+}
+
+#navigation li a:hover {
+        margin-top: 2px;
+}
+#navigation_container {
+   margin: 0 auto;
+   float: left;
+}
+
+
+
+main {
+	flex: 1 0 auto;
+}
