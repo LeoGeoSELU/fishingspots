@@ -31,29 +31,11 @@ $(document).ready(function() {
         dataType: "json",
         crossDomain: true,
         success: function(data) {
+            handleGeoJson(data.results.features);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error with ajax...running faker data now.");
 
-            L.geoJSON(data.results, {
-                style: function (feature) {
-                    return {color: feature.properties.color};
-                }
-            }).bindPopup(function (layer) {
-                return layer.feature.properties.description;
-            }).addTo(mymap);
-
-            $(data.results.features).each(function(key, data){
-             // do stuff
-                console.log(data.properties.name);
-
-
-                var fsid = "fs" + $("#fsmenu").children("li").length;
-                console.log(fsid);
-                L.marker(data.geometry.coordinates).addTo(mymap);
-                // alert($("#fsmenu").children("li"));
-                $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
-        });
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        console.log("Error with ajax...running faker data now.")
             var features = [{
                 "type": "Feature",
                 "properties": {
@@ -86,25 +68,28 @@ $(document).ready(function() {
                 }
             }];
 
-            L.geoJSON(features, {
-                style: function (feature) {
-                    return {color: feature.properties.color};
-                }
-            }).bindPopup(function (layer) {
-                return layer.feature.properties.description;
-            }).addTo(mymap);
-
-            $(features).each(function(key, data){
-                 // do stuff
-                console.log(data.properties.name);
-
-
-                var fsid = "fs" + $("#fsmenu").children("li").length;
-                console.log(fsid);
-                L.marker(data.geometry.coordinates).addTo(mymap);
-                 // alert($("#fsmenu").children("li"));
-                $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
-            });
+            handleGeoJson(features);
         }
     });
 })
+
+function handleGeoJson(data) {
+    L.geoJSON(data, {
+        style: function (feature) {
+            return {color: feature.properties.color};
+        }
+    }).bindPopup(function (layer) {
+        return layer.feature.properties.description;
+    }).addTo(mymap);
+
+    $(data).each(function(key, data){
+     // do stuff
+        console.log(data.properties.name);
+
+        var fsid = "fs" + $("#fsmenu").children("li").length;
+        console.log(fsid);
+        L.marker(data.geometry.coordinates).addTo(mymap);
+        
+        $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
+    })
+}

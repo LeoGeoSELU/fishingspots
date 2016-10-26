@@ -14,43 +14,10 @@ $(document).ready(function() {
         dataType: "json",
         crossDomain: true,
         success: function(data) {
-
-            L.geoJSON(data.results, {
-                style: function (feature) {
-                    return {color: feature.properties.color};
-                }
-            }).bindPopup(function (layer) {
-                return layer.feature.properties.description;
-            }).addTo(mymap);
-
-            $(data.results.features).each(function(key, data){
-             // do stuff
-                console.log(data.properties.name);
-
-
-                var fsid = "fs" + $("#fsmenu").children("li").length;
-                console.log(fsid);
-                L.marker(data.geometry.coordinates).addTo(mymap);
-                // alert($("#fsmenu").children("li"));
-                $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
-    //                 console.log(data.properties.name);
-    //                 console.log(data.properties.lat);
-    //                 console.log(data.properties.lon);
-    //                 console.log(data.properties.score);
-    //                 console.log(data.geometry.coordinates);
-        });
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        console.log("Error with ajax...running faker data now.")
-//             alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
-//
-//             $('#result').html('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
-//             console.log('jqXHR:');
-//             console.log(jqXHR);
-//             console.log('textStatus:');
-//             console.log(textStatus);
-//             console.log('errorThrown:');
-//             console.log(errorThrown);
+            handleGeoJson(data.results.features);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error with ajax...running faker data now.");
 
             var features = [{
                 "type": "Feature",
@@ -84,29 +51,28 @@ $(document).ready(function() {
                 }
             }];
 
-            L.geoJSON(features, {
-                style: function (feature) {
-                    return {color: feature.properties.color};
-                }
-            }).bindPopup(function (layer) {
-                return layer.feature.properties.description;
-            }).addTo(mymap);
-
-             $(features).each(function(key, data){
-                 // do stuff
-                 console.log(data.properties.name);
-
-
-                 var fsid = "fs" + $("#fsmenu").children("li").length;
-                 console.log(fsid);
-                 L.marker(data.geometry.coordinates).addTo(mymap);
-                 // alert($("#fsmenu").children("li"));
-                 $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
-
-             });
-
-
+            handleGeoJson(features);
         }
-
     });
 })
+
+function handleGeoJson(data) {
+    L.geoJSON(data, {
+        style: function (feature) {
+            return {color: feature.properties.color};
+        }
+    }).bindPopup(function (layer) {
+        return layer.feature.properties.description;
+    }).addTo(mymap);
+
+    $(data).each(function(key, data){
+     // do stuff
+        console.log(data.properties.name);
+
+        var fsid = "fs" + $("#fsmenu").children("li").length;
+        console.log(fsid);
+        L.marker(data.geometry.coordinates).addTo(mymap);
+        
+        $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
+    })
+}
