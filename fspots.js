@@ -72,7 +72,7 @@ function handleGeoJson(data) {
         var fsid = "fs" + $("#fsmenu").children("li").length;
         console.log(fsid);
         L.marker(data.geometry.coordinates).addTo(mymap);
-        
+
         $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
     })
 }
