@@ -16,6 +16,7 @@
   <!-- Leaflet CSS and JS -->
   <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
   <script src="lib/leaflet/leaflet.js"></script>
+    <link rel="stylesheet" href="easyprint/easyPrint.css"/>
 
 </head>
 
@@ -43,7 +44,7 @@
       </div>
 
         <div class="col s12">
-            <div class="row">
+            <div class="row menu">
 
                     <div class="col m3">
                         <ul class="collection" id="fsmenu">
@@ -51,7 +52,7 @@
                         </ul>
                     </div>
 
-                    <div class="col m9" id="mapid" style="height: 400px">
+                    <div class="col m9 easyPrint" id="mapid" style="height: 400px">
 
                     </div>
 
@@ -79,7 +80,9 @@
 
 
 </div>
+
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<script src="easyprint/leaflet.easyPrint.js"></script>
 <script type="text/javascript" src="fspots.js"></script>
 
 </body>

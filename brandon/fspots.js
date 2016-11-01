@@ -74,13 +74,33 @@ $(document).ready(function() {
 })
 
 function handleGeoJson(data) {
+
+    var geojsonMarkerOptions = {
+        radius: 8,
+        weight: 1,
+        opacity: 1,
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+    };
+
     L.geoJSON(data, {
-        style: function (feature) {
-            return {color: feature.properties.color};
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
         }
     }).bindPopup(function (layer) {
-        return layer.feature.properties.description;
+        return layer.feature.properties.name
+            + '<br>Score: ' + layer.feature.properties.score
+            + '<br>Coordinates: ' + layer.feature.geometry.coordinates[0]
+            + ', ' + layer.feature.geometry.coordinates[1];
     }).addTo(mymap);
+//    L.geoJSON(data, {
+//        style: function (feature) {
+//            return {color: feature.properties.color};
+//        }
+//    }).bindPopup(function (layer) {
+//        return layer.feature.properties.description;
+//    }).addTo(mymap);
 
     $(data).each(function(key, data){
      // do stuff
@@ -88,7 +108,15 @@ function handleGeoJson(data) {
 
         var fsid = "fs" + $("#fsmenu").children("li").length;
         console.log(fsid);
-        L.marker(data.geometry.coordinates).addTo(mymap);
+//        marker = L.marker(data.geometry.coordinates).addTo(mymap);
+//        marker.bindPopup(data.properties.name);
+        var circle = L.circle(data.geometry.coordinates, {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 500
+        }).addTo(mymap);
+        circle.bindPopup("Location");
         
         $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><a class=\"waves-effect waves-cyan btn-flat\">" + data.properties.name + "</a></li>");
     })
