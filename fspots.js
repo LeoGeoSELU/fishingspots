@@ -62,6 +62,7 @@ $(document).ready(function() {
 function handleGeoJson(data) {
 
     var geojsonMarkerOptions = {
+
         radius: 8,
         weight: 1,
         opacity: 1,
@@ -76,8 +77,8 @@ function handleGeoJson(data) {
         }
     }).bindPopup(function (layer) {
         return layer.feature.properties.name
-            + '<br>Score: ' + layer.feature.properties.score
-            + '<br>Coordinates: ' + layer.feature.geometry.coordinates[0]
+            + '<br><b>Score: </b>' + layer.feature.properties.score
+            + '<br><b>Coordinates:</b> ' + layer.feature.geometry.coordinates[0]
             + ', ' + layer.feature.geometry.coordinates[1];
     }).addTo(mymap);
 		L.easyPrint({
@@ -85,6 +86,46 @@ function handleGeoJson(data) {
 		elementsToHide: '#fsmenu',
 		position: 'topleft'
 		}).addTo(mymap);
+    var drawnItems = new L.FeatureGroup();
+        mymap.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+        position: 'topright',
+          draw: {
+            polygon: {
+                    shapeOptions: {
+                        color: 'purple'
+                    },
+                },
+            polyline: {
+                    shapeOptions: {
+                        color: 'red'
+                    },
+                },
+            rect: {
+                    shapeOptions: {
+                        color: 'green'
+                    },
+                },
+            circle: {
+                    shapeOptions: {
+                        color: 'steelblue'
+                    },
+                },
+        },
+
+             
+            edit: {
+                featureGroup: drawnItems
+            }
+    });
+    mymap.addControl(drawControl);
+
+    mymap.on('draw:created', function (e) {
+            var type = e.layerType,
+                layer = e.layer;
+            drawnItems.addLayer(layer);
+        });
 
 //    L.geoJSON(data, {
 //        style: function (feature) {
