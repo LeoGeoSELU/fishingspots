@@ -3,6 +3,9 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'LeoGeo'
 }).addTo(mymap);
 
+
+
+
 //var coords = [30.17, -89.6838];
 //var marker = L.marker(coords).addTo(mymap);
 
@@ -77,6 +80,11 @@ function handleGeoJson(data) {
             + '<br>Coordinates: ' + layer.feature.geometry.coordinates[0]
             + ', ' + layer.feature.geometry.coordinates[1];
     }).addTo(mymap);
+		L.easyPrint({
+		title: 'Print Map',
+		elementsToHide: '#fsmenu',
+		position: 'topleft'
+		}).addTo(mymap);
 
 //    L.geoJSON(data, {
 //        style: function (feature) {
@@ -100,8 +108,4 @@ function handleGeoJson(data) {
         $("#fsmenu").append("<li id=\"" + fsid + " class=\"collection-item\"><button class=\"waves-effect waves-cyan btn-flat\" disabled>" + data.properties.name + "</button></li>");
     })
 
-    L.easyPrint({
-    title: 'Print Map',
-    position: 'topleft'
-    }).addTo(mymap);
 }

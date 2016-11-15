@@ -16,11 +16,13 @@
   <!-- Leaflet CSS and JS -->
   <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
   <script src="lib/leaflet/leaflet.js"></script>
-    <link rel="stylesheet" href="easyprint/easyPrint.css"/>
+  <link rel="stylesheet" href="leaflet-easyPrint/dist/easyPrint.css"/>
 
 </head>
 
 <body>
+<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<script src="leaflet-easyPrint/dist/leaflet.easyPrint.js"></script>
 
   <nav>
     <div class="nav-wrapper light-blue">
@@ -52,7 +54,7 @@
                         </ul>
                     </div>
 
-                    <div class="col m9 easyPrint" id="mapid" style="height: 400px">
+                    <div class="col m9 easyPrint" id="mapid" style="height:400px; width:900px">
 
                     </div>
 
@@ -81,8 +83,7 @@
 
 </div>
 
-<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-<script src="easyprint/leaflet.easyPrint.js"></script>
+
 <script type="text/javascript" src="fspots.js"></script>
 
 </body>
