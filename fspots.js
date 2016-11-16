@@ -1,9 +1,26 @@
-var mymap = L.map('mapid').setView([30.13919, -89.6527], 11);
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: 'LeoGeo'
-}).addTo(mymap);
+var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>'
+    , thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+		osmAttrib =  'LeoGeo'+'&copy; ' + osmLink + ' Contributors'
+		, landUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
+    , thunAttrib = '&copy; ' + osmLink + ' Contributors & ' + thunLink;
 
+var osmMap = L.tileLayer(osmUrl, {
+		        attribution: osmAttrib
+					}),
+		landMap = L.tileLayer(landUrl, {
+		        attribution: thunAttrib
+		    });
 
+var mymap = L.map('mapid',{
+	layers:[osmMap]
+}).setView([30.13919, -89.6527], 11);
+var baseLayers = {
+					"OSM": osmMap,
+					"landscape": landMap
+				};
+
+L.control.layers(baseLayers).addTo(mymap);
 
 
 //var coords = [30.17, -89.6838];
@@ -114,7 +131,7 @@ function handleGeoJson(data) {
                 },
         },
 
-             
+
             edit: {
                 featureGroup: drawnItems
             }
