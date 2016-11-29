@@ -12,6 +12,20 @@ var osmMap = L.tileLayer(osmUrl, {
 		        attribution: thunAttrib
 		    });
 
+				function wmpaFeatureControl (feature,layer){
+					layer.bindPopup("<b>Location:</b>" + feature.properties.Type+ '<br><b>Coordinates:</b> ' + layer.feature.geometry.coordinates[0]
+					+ ', ' + layer.feature.geometry.coordinates[1]);
+				};
+				function marinaFeatureControl(feature,layer){
+					layer.bindPopup("hello");
+				};
+var WMAPpoints = new L.layerGroup();
+var MarinasPoints = new L.layerGroup();
+var wmapLayer = L.geoJson(mapData,{
+	onEachFeature : wmpaFeatureControl}).addTo(WMAPpoints);
+var MarinaLayer = L.geoJson(MarinaData,{
+		onEachFeature : marinaFeatureControl}).addTo(MarinasPoints);
+
 var mymap = L.map('mapid',{
 	layers:[osmMap]
 }).setView([30.13919, -89.6527], 11);
@@ -19,8 +33,11 @@ var baseLayers = {
 					"OSM": osmMap,
 					"landscape": landMap
 				};
-
-L.control.layers(baseLayers).addTo(mymap);
+	var overlays = {
+				    "Wildlife Management Area": WMAPpoints,
+						"Marina": MarinasPoints
+				};
+				L.control.layers(baseLayers,overlays).addTo(mymap);
 
 
 //var coords = [30.17, -89.6838];
@@ -130,8 +147,6 @@ function handleGeoJson(data) {
                     },
                 },
         },
-
-
             edit: {
                 featureGroup: drawnItems
             }
@@ -143,7 +158,13 @@ function handleGeoJson(data) {
                 layer = e.layer;
             drawnItems.addLayer(layer);
         });
+				lc = L.control.locate({
 
+								    strings: {
+								        title: "Show me where I am, yo!"
+								    },
+										position:'topleft'
+								}).addTo(mymap);
 //    L.geoJSON(data, {
 //        style: function (feature) {
 //            return {color: feature.properties.color};
