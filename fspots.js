@@ -19,6 +19,7 @@ var osmMap = L.tileLayer(osmUrl, {
 				function marinaFeatureControl(feature,layer){
 					layer.bindPopup("hello");
 				};
+var city = L.OWM.current({type:'city',appId:'3f2e6b6d74818078d935342ad0ca9325',popup: true,temperatureUnit: 'C'});
 var WMAPpoints = new L.layerGroup();
 var MarinasPoints = new L.layerGroup();
 var wmapLayer = L.geoJson(mapData,{
@@ -35,7 +36,8 @@ var baseLayers = {
 				};
 	var overlays = {
 				    "Wildlife Management Area": WMAPpoints,
-						"Marina": MarinasPoints
+						"Marina": MarinasPoints,
+						"City": city
 				};
 				L.control.layers(baseLayers,overlays).addTo(mymap);
 
