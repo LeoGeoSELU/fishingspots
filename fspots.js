@@ -12,21 +12,6 @@ var osmMap = L.tileLayer(osmUrl, {
 		        attribution: thunAttrib
 		    });
 
-				function wmpaFeatureControl (feature,layer){
-					layer.bindPopup("<b>Location:</b>" + feature.properties.Type+ '<br><b>Coordinates:</b> ' + layer.feature.geometry.coordinates[0]
-					+ ', ' + layer.feature.geometry.coordinates[1]);
-				};
-				function marinaFeatureControl(feature,layer){
-					layer.bindPopup("hello");
-				};
-var city = L.OWM.current({type:'city',appId:'3f2e6b6d74818078d935342ad0ca9325',popup: true,temperatureUnit: 'C'});
-var WMAPpoints = new L.layerGroup();
-var MarinasPoints = new L.layerGroup();
-var wmapLayer = L.geoJson(mapData,{
-	onEachFeature : wmpaFeatureControl}).addTo(WMAPpoints);
-var MarinaLayer = L.geoJson(MarinaData,{
-		onEachFeature : marinaFeatureControl}).addTo(MarinasPoints);
-
 var mymap = L.map('mapid',{
 	layers:[osmMap]
 }).setView([30.13919, -89.6527], 11);
@@ -34,12 +19,8 @@ var baseLayers = {
 					"OSM": osmMap,
 					"landscape": landMap
 				};
-	var overlays = {
-				    "Wildlife Management Area": WMAPpoints,
-						"Marina": MarinasPoints,
-						"City": city
-				};
-				L.control.layers(baseLayers,overlays).addTo(mymap);
+
+L.control.layers(baseLayers).addTo(mymap);
 
 
 //var coords = [30.17, -89.6838];
@@ -90,6 +71,9 @@ $(document).ready(function() {
                 }
             }];
 
+
+
+
             handleGeoJson(features);
         }
     });
@@ -115,7 +99,8 @@ function handleGeoJson(data) {
         return layer.feature.properties.name
             + '<br><b>Score: </b>' + layer.feature.properties.score
             + '<br><b>Coordinates:</b> ' + layer.feature.geometry.coordinates[0]
-            + ', ' + layer.feature.geometry.coordinates[1];
+            + ', ' + layer.feature.geometry.coordinates[1]
+             + '<br><a href="https://twitter.com/intent/tweet?text= Hi, ' + layer.feature.properties.name + " has a score of " + layer.feature.properties.score + " with coordinates " + layer.feature.geometry.coordinates[0] + "," + layer.feature.geometry.coordinates[1]  + '">Tweet</a>';
     }).addTo(mymap);
 		L.easyPrint({
 		title: 'Print Map',
@@ -149,6 +134,8 @@ function handleGeoJson(data) {
                     },
                 },
         },
+
+
             edit: {
                 featureGroup: drawnItems
             }
@@ -160,13 +147,33 @@ function handleGeoJson(data) {
                 layer = e.layer;
             drawnItems.addLayer(layer);
         });
-				lc = L.control.locate({
 
-								    strings: {
-								        title: "Show me where I am, yo!"
-								    },
-										position:'topleft'
-								}).addTo(mymap);
+function createButton(msg) {
+
+    var tweetDiv = document.querySelector(".twitter-share-button");
+    var link = document.createElement("a");
+
+    link.setAttribute("href", "https://twitter.com/share");
+    link.setAttribute("class", "twitter-share-button");
+    link.setAttribute('id', 'twitter');
+    link.setAttribute("data-text", "" + msg + "");
+    link.setAttribute("data-size", "large");
+    tweetDiv.parentNode.replaceChild(link, tweetDiv);
+    twttr.widgets.load();
+  }
+
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    var p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+      js = d.createElement(s);
+      js.id = id;
+      js.src = p + '://platform.twitter.com/widgets.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }
+  })(document, 'script', 'twitter-wjs');
+  
 //    L.geoJSON(data, {
 //        style: function (feature) {
 //            return {color: feature.properties.color};
