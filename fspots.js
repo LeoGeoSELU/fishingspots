@@ -17,7 +17,7 @@ function wmpaFeatureControl(feature, layer) {
 };
 
 function marinaFeatureControl(feature, layer) {
-    layer.bindPopup("hello");
+    layer.bindPopup("<b>Location:</b>" + feature.properties.name + '<br><b>Coordinates:</b> ' + layer.feature.geometry.coordinates[0] + ', ' + layer.feature.geometry.coordinates[1]);
 };
 //var city = L.OWM.current({type:'city',appId:'3f2e6b6d74818078d935342ad0ca9325',popup: true,temperatureUnit: 'C'});
 var WMAPpoints = new L.layerGroup();
@@ -60,7 +60,9 @@ $(document).ready(function () {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Error with ajax...running faker data now.");
 
-            var features = [{
+            var features = [
+
+                {
                 "type": "Feature",
                 "properties": {
                     "name": "Lake Saint Catherine",
@@ -89,7 +91,8 @@ $(document).ready(function () {
                 "geometry": {
                     "type": "Point",
                     "coordinates": [-89.669381529094, 30.139716491105]
-                }
+                },
+
             }];
 
 
